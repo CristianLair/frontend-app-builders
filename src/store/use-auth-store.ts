@@ -70,6 +70,9 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({ token: state.token, user: state.user }),
       onRehydrateStorage: () => (state) => {
         setAuthToken(state?.token ?? null);
+        if (!state?.token) {
+          useAuthStore.setState({ status: "unauthenticated" });
+        }
       },
     },
   ),

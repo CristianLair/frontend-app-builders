@@ -13,21 +13,21 @@ export function Input({ label, error, id: idProp, className, ...props }: InputPr
   return (
     <div className="space-y-1.5">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-zinc-700">
+        <label htmlFor={id} className="text-sm font-medium text-gray-300">
           {label}
         </label>
       )}
       <input
         id={id}
         className={cn(
-          "h-10 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-emerald-600 focus:outline-2 focus:outline-emerald-600/20",
-          error && "border-red-500 focus:border-red-500 focus:outline-red-500/20",
+          "h-10 w-full rounded-lg border border-white/15 bg-white/5 px-3 text-sm text-white caret-pink-400 placeholder:text-gray-500 focus:border-pink-500/40 focus:outline-2 focus:outline-pink-500/30",
+          error && "border-red-500/50 focus:border-red-500 focus:outline-red-500/40",
           className,
         )}
         aria-invalid={error ? true : undefined}
         {...props}
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-400">{error}</p>}
     </div>
   );
 }

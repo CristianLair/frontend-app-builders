@@ -11,12 +11,12 @@ type ButtonProps = PropsWithChildren<
 
 const variants = {
   primary:
-    "bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:outline-emerald-600 disabled:bg-emerald-600/50",
+    "bg-gradient-to-r from-pink-500 to-violet-600 text-white shadow-lg shadow-pink-500/20 hover:from-pink-400 hover:to-violet-500 focus-visible:outline-pink-400 disabled:bg-gradient-to-r disabled:from-pink-500/60 disabled:to-violet-600/60 disabled:shadow-none",
   secondary:
-    "bg-white text-zinc-900 ring-1 ring-inset ring-zinc-300 hover:bg-zinc-50 focus-visible:outline-zinc-600",
-  ghost: "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900",
+    "bg-white/10 text-white ring-1 ring-inset ring-white/15 hover:bg-white/20 focus-visible:outline-white/60",
+  ghost: "text-gray-300 hover:bg-white/10 hover:text-white",
   danger:
-    "bg-red-600 text-white hover:bg-red-700 focus-visible:outline-red-600 disabled:bg-red-600/50",
+    "bg-red-500/15 text-red-300 ring-1 ring-inset ring-red-500/30 hover:bg-red-500/25 hover:text-red-200 focus-visible:outline-red-500/60 disabled:bg-red-500/10",
 } as const;
 
 export function Button({

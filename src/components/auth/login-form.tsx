@@ -9,10 +9,12 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { isApiError } from "@/lib/api/error";
 import { useAuthStore } from "@/store/use-auth-store";
+import { useDemoStore } from "@/store/use-demo-store";
 
 export function LoginForm() {
   const router = useRouter();
   const login = useAuthStore((store) => store.login);
+  const enableDemo = useDemoStore((store) => store.enableDemo);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -33,11 +35,17 @@ export function LoginForm() {
     }
   }
 
+  function handleDemo() {
+    enableDemo();
+    router.push("/dashboard");
+    router.refresh();
+  }
+
   return (
     <Card>
       <div className="mb-6 space-y-1">
-        <h1 className="text-xl font-semibold text-zinc-900">Iniciar sesión</h1>
-        <p className="text-sm text-zinc-500">Accede con tu cuenta para continuar</p>
+        <h1 className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-xl font-semibold text-transparent">Iniciar sesión</h1>
+        <p className="text-sm text-gray-400">Accede con tu cuenta para continuar</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert variant="error">{error}</Alert>}
@@ -66,12 +74,21 @@ export function LoginForm() {
         </Button>
       </form>
       <div className="mt-4 flex items-center justify-between text-sm">
-        <Link href="/register" className="text-emerald-600 hover:text-emerald-700">
+        <Link href="/register" className="text-pink-400 hover:text-pink-300">
           Crear cuenta
         </Link>
-        <Link href="/forgot-password" className="hover:underline">
+        <Link href="/forgot-password" className="text-gray-400 hover:text-pink-400">
           ¿Olvidaste tu contraseña?
         </Link>
+      </div>
+      <div className="mt-6 border-t border-white/10 pt-4 text-center">
+        <button
+          type="button"
+          onClick={handleDemo}
+          className="text-sm font-medium text-pink-400 hover:text-pink-300"
+        >
+          Explorar el modo demo sin backend →
+        </button>
       </div>
     </Card>
   );

@@ -44,8 +44,8 @@ export function RegisterForm() {
   return (
     <Card>
       <div className="mb-6 space-y-1">
-        <h1 className="text-xl font-semibold text-zinc-900">Crear cuenta</h1>
-        <p className="text-sm text-zinc-500">Regístrate para empezar a operar</p>
+        <h1 className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-xl font-semibold text-transparent">Crear cuenta</h1>
+        <p className="text-sm text-gray-400">Regístrate para empezar a operar</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert variant="error">{error}</Alert>}
@@ -92,9 +92,9 @@ export function RegisterForm() {
           Registrarme
         </Button>
       </form>
-      <p className="mt-4 text-center text-sm text-zinc-500">
+      <p className="mt-4 text-center text-sm text-gray-400">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/login" className="text-emerald-600 hover:text-emerald-700">
+        <Link href="/login" className="text-pink-400 hover:text-pink-300">
           Inicia sesión
         </Link>
       </p>

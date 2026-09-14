@@ -33,8 +33,8 @@ export function ForgotPasswordForm() {
   return (
     <Card>
       <div className="mb-6 space-y-1">
-        <h1 className="text-xl font-semibold text-zinc-900">Recuperar contraseña</h1>
-        <p className="text-sm text-zinc-500">
+        <h1 className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-xl font-semibold text-transparent">Recuperar contraseña</h1>
+        <p className="text-sm text-gray-400">
           Ingresa tu correo y te enviaremos un enlace para restablecerla
         </p>
       </div>
@@ -55,8 +55,8 @@ export function ForgotPasswordForm() {
           Enviar enlace
         </Button>
       </form>
-      <p className="mt-4 text-center text-sm text-zinc-500">
-        <Link href="/login" className="text-emerald-600 hover:text-emerald-700">
+      <p className="mt-4 text-center text-sm text-gray-400">
+        <Link href="/login" className="text-pink-400 hover:text-pink-300">
           Volver a iniciar sesión
         </Link>
       </p>

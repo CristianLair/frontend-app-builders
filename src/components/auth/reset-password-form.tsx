@@ -48,8 +48,8 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   return (
     <Card>
       <div className="mb-6 space-y-1">
-        <h1 className="text-xl font-semibold text-zinc-900">Nueva contraseña</h1>
-        <p className="text-sm text-zinc-500">Define una contraseña nueva para tu cuenta</p>
+        <h1 className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-xl font-semibold text-transparent">Nueva contraseña</h1>
+        <p className="text-sm text-gray-400">Define una contraseña nueva para tu cuenta</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert variant="error">{error}</Alert>}
@@ -78,8 +78,8 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           Guardar contraseña
         </Button>
       </form>
-      <p className="mt-4 text-center text-sm text-zinc-500">
-        <Link href="/login" className="text-emerald-600 hover:text-emerald-700">
+      <p className="mt-4 text-center text-sm text-gray-400">
+        <Link href="/login" className="text-pink-400 hover:text-pink-300">
           Volver a iniciar sesión
         </Link>
       </p>
