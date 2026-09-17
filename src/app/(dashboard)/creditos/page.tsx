@@ -223,11 +223,11 @@ export default function CreditosPage() {
                   key={credit.id}
                   className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm"
                 >
-                  <div className="flex items-center justify-between">
-                    <p className="font-semibold text-white">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="min-w-0 truncate font-semibold text-white">
                       {formatMoney(credit.amount)}
                     </p>
-                    <span className="rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs font-medium capitalize text-green-300">
+                    <span className="shrink-0 rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs font-medium capitalize text-green-300">
                       {credit.status}
                     </span>
                   </div>

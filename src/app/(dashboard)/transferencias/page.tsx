@@ -282,11 +282,11 @@ export default function TransferenciasPage() {
               const label = movement.destination || movement.source || movement.description || "";
               return (
                 <li key={movement.id} className="flex items-center justify-between gap-4 py-3">
-                  <div>
-                    <p className="font-medium text-white">
+                  <div className="min-w-0">
+                    <p className="truncate font-medium text-white">
                       {movement.description || (positive ? "Cash-In" : "Cash-Out")}
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="truncate text-sm text-gray-400">
                       {positive ? "Recibido" : "Enviado"} · {label || "—"} ·{" "}
                       {formatDate(movement.created_at)}
                     </p>
@@ -294,8 +294,8 @@ export default function TransferenciasPage() {
                   <p
                     className={
                       positive
-                        ? "font-semibold text-green-400"
-                        : "font-semibold text-red-400"
+                        ? "shrink-0 font-semibold text-green-400"
+                        : "shrink-0 font-semibold text-red-400"
                     }
                   >
                     {positive ? "+" : "−"}

@@ -144,11 +144,11 @@ export function DemoMetrics() {
           <div className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-5">
             <div>
               <p className="text-xs uppercase tracking-wide text-gray-500">Ingresos este mes</p>
-              <p className="mt-1 font-semibold text-green-400">+{formatMoney(income)}</p>
+              <p className="mt-1 text-sm font-semibold text-green-400">+{formatMoney(income)}</p>
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-gray-500">Egresos este mes</p>
-              <p className="mt-1 font-semibold text-red-400">−{formatMoney(expense)}</p>
+              <p className="mt-1 text-sm font-semibold text-red-400">−{formatMoney(expense)}</p>
             </div>
             <div className="col-span-2 rounded-lg bg-white/5 p-3">
               <p className="text-xs uppercase tracking-wide text-gray-500">Saldo neto del mes</p>

@@ -111,13 +111,13 @@ export default function DashboardPage() {
           <ul className="divide-y divide-white/10">
             {movements.map((movement) => (
               <li key={movement.id} className="flex items-center justify-between gap-4 py-3">
-                <div>
-                  <p className="font-medium text-white">
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-white">
                     {movement.description || movement.category || "Movimiento"}
                   </p>
-                  <p className="text-sm text-gray-400">{formatDate(movement.created_at)}</p>
+                  <p className="truncate text-sm text-gray-400">{formatDate(movement.created_at)}</p>
                 </div>
-                <p className="font-semibold text-white">{formatMoney(movement.amount)}</p>
+                <p className="shrink-0 font-semibold text-white">{formatMoney(movement.amount)}</p>
               </li>
             ))}
           </ul>

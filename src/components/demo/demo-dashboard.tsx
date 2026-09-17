@@ -57,12 +57,12 @@ export function DemoDashboard() {
         </h2>
         <ul className="divide-y divide-white/10">
           {demoAccounts.map((account) => (
-            <li key={account.id} className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium text-white">{account.name}</p>
-                <p className="text-sm text-gray-400">{account.number}</p>
+            <li key={account.id} className="flex items-center justify-between gap-4 py-3">
+              <div className="min-w-0">
+                <p className="truncate font-medium text-white">{account.name}</p>
+                <p className="truncate text-sm text-gray-400">{account.number}</p>
               </div>
-              <p className="font-semibold text-white">{formatMoney(account.balance)}</p>
+              <p className="shrink-0 font-semibold text-white">{formatMoney(account.balance)}</p>
             </li>
           ))}
         </ul>
@@ -75,9 +75,9 @@ export function DemoDashboard() {
         <ul className="divide-y divide-white/10">
           {demoInvestments.map((investment) => (
             <li key={investment.id} className="flex items-center justify-between gap-4 py-3">
-              <div>
-                <p className="font-medium text-white">{investment.name}</p>
-                <p className="text-sm text-gray-400">
+              <div className="min-w-0">
+                <p className="truncate font-medium text-white">{investment.name}</p>
+                <p className="truncate text-sm text-gray-400">
                   Vence el{" "}
                   {new Date(investment.maturity).toLocaleDateString("es-AR", {
                     day: "2-digit",
@@ -86,7 +86,7 @@ export function DemoDashboard() {
                   })}
                 </p>
               </div>
-              <div className="text-right">
+              <div className="shrink-0 text-right">
                 <p className="font-semibold text-white">{formatMoney(investment.total)}</p>
                 <p className="text-xs text-green-400">
                   +{formatMoney(investment.net)} ({Math.round(investment.rate * 100)}%
@@ -105,15 +105,15 @@ export function DemoDashboard() {
         <ul className="divide-y divide-white/10">
           {demoTransactions.map((transaction) => (
             <li key={transaction.id} className="flex items-center justify-between gap-4 py-3">
-              <div>
-                <p className="font-medium text-white">{transaction.concept}</p>
-                <p className="text-sm text-gray-400">
+              <div className="min-w-0">
+                <p className="truncate font-medium text-white">{transaction.concept}</p>
+                <p className="truncate text-sm text-gray-400">
                   {transactionLabels[transaction.category]} · {transaction.createdAt}
                 </p>
               </div>
               <p
                 className={cn(
-                  "font-semibold",
+                  "shrink-0 font-semibold",
                   transaction.amount < 0 ? "text-red-400" : "text-green-400",
                 )}
               >

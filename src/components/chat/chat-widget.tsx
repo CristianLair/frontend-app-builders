@@ -80,7 +80,7 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex h-[min(560px,80vh)] w-[min(400px,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#1b0f3f] shadow-2xl shadow-purple-950/50">
+    <div className="fixed inset-x-4 bottom-4 z-50 flex h-[min(560px,80vh)] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#1b0f3f] shadow-2xl shadow-purple-950/50 sm:inset-x-auto sm:bottom-5 sm:right-5 sm:w-[400px]">
       <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-purple-900 to-indigo-900 px-4 py-3">
         <div>
           <p className="text-sm font-semibold text-white">Asistente financiero</p>

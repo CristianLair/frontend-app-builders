@@ -88,12 +88,12 @@ export function PitchDeck() {
               style={{ width: `${((index + 1) / total) * 100}%` }}
             />
           </div>
-          <div className="mt-3 flex items-center justify-between gap-3">
+          <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="button"
               onClick={prev}
               disabled={index === 0}
-              className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-white/10 px-3 text-sm font-medium text-white transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-white/10 px-3 text-sm font-medium text-white transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <PrevIcon />
               Anterior
@@ -121,7 +121,7 @@ export function PitchDeck() {
               type="button"
               onClick={next}
               disabled={index === total - 1}
-              className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-r from-pink-500 to-violet-600 px-3 text-sm font-medium text-white shadow-lg shadow-pink-500/20 transition-all hover:from-pink-400 hover:to-violet-500 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-pink-500 to-violet-600 px-3 text-sm font-medium text-white shadow-lg shadow-pink-500/20 transition-all hover:from-pink-400 hover:to-violet-500 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Siguiente
               <NextIcon />

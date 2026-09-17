@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { InstallPrompt } from "@/components/pwa/install-prompt";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +14,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Presto - App Financiera",
+  title: "Presto - Préstamos y créditos",
   description: "Tu asistente financiero inteligente",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Presto",
+  },
+  icons: {
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f0728",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -32,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-pink-600/20 blur-3xl" />
         </div>
         {children}
+        <InstallPrompt />
       </body>
     </html>
   );
