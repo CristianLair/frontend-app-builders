@@ -29,7 +29,7 @@ export interface DemoTransaction {
 export const demoUser: User = {
   id: "demo-001",
   name: "Usuario Demo",
-  email: "demo@ien.app",
+  email: "demo@presto.app",
   role: "usuario",
 };
 

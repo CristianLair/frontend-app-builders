@@ -18,7 +18,7 @@ const DEMO_CARD: CardType = {
   id: "demo-card",
   first_name: "Usuario",
   last_name: "Demo",
-  email: "demo@ien.app",
+  email: "demo@presto.app",
   phone: "555-0100",
   bin: "411111",
   sub_bin: "111",

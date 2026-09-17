@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { DemoMetrics } from "@/components/demo/demo-metrics";
 import {
   demoAccounts,
   demoInvestments,
@@ -47,6 +48,8 @@ export function DemoDashboard() {
           </p>
         </Card>
       </div>
+
+      <DemoMetrics />
 
       <Card>
         <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-200">

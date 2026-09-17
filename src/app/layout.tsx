@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IEN - App Financiera",
+  title: "Presto - App Financiera",
   description: "Tu asistente financiero inteligente",
 };
 

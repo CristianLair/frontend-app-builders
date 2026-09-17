@@ -25,3 +25,18 @@ body {
   background-color: #ec4899;
   color: #ffffff;
 }
+
+@keyframes deck-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.deck-slide {
+  animation: deck-slide-in 0.35s ease both;
+}

@@ -90,6 +90,11 @@ export function LoginForm() {
           Explorar el modo demo sin backend →
         </button>
       </div>
+      <p className="mt-3 text-center text-xs text-gray-500">
+        <Link href="/presentacion" className="hover:text-pink-400">
+          Ver la presentación para inversores →
+        </Link>
+      </p>
     </Card>
   );
 }

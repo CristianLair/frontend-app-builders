@@ -95,13 +95,13 @@ export function AppSidebar() {
     router.refresh();
   }
 
-  const contact = user?.email ?? user?.name ?? "demo@ien.app";
+  const contact = user?.email ?? user?.name ?? "demo@presto.app";
 
   const desktopNav = (
     <>
       <Link href="/dashboard" className="px-4 py-5">
         <p className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-lg font-bold tracking-tight text-transparent">
-          IEN
+          Presto
         </p>
       </Link>
       <nav className="flex flex-1 flex-col gap-1 px-3">
@@ -155,7 +155,7 @@ export function AppSidebar() {
       <div className="sticky top-0 z-20 border-b border-white/10 lg:hidden">
         <div className="flex items-center justify-between px-4 py-3">
           <p className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text font-bold tracking-tight text-transparent">
-            IEN
+            Presto
           </p>
           <div className="flex items-center gap-3">
             {demoMode && (
