@@ -29,7 +29,7 @@ export function AppShell({ children }: PropsWithChildren) {
 
   if (mode === "demo") {
     return (
-      <div className="flex min-h-full">
+      <div className="flex min-h-full flex-col lg:flex-row">
         <AppSidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 lg:px-8">
@@ -43,7 +43,7 @@ export function AppShell({ children }: PropsWithChildren) {
 
   return (
     <SessionGuard>
-      <div className="flex min-h-full">
+      <div className="flex min-h-full flex-col lg:flex-row">
         <AppSidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 lg:px-8">{children}</main>
