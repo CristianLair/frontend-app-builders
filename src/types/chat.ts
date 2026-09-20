@@ -24,6 +24,45 @@ export interface CreditProjection {
   max_allowed?: number;
 }
 
+export type MarketKind = "crypto" | "bolsa_ar" | "dolar";
+
+export interface MarketQuote {
+  symbol: string;
+  name: string;
+  market: MarketKind;
+  currency: string;
+  price: number;
+  change_24h_pct?: number | null;
+  source?: string;
+  is_demo?: boolean;
+  updated_at?: string;
+}
+
+export interface PaperPosition {
+  id: string;
+  symbol: string;
+  name: string;
+  market: string;
+  currency: string;
+  quantity: number;
+  entry_price: number;
+  current_price: number;
+  invested_ars: number;
+  current_value_ars: number;
+  pl_ars: number;
+  pl_pct: number;
+  change_24h_pct?: number | null;
+  is_demo?: boolean;
+  opened_at?: string | null;
+}
+
+export interface PortfolioSummary {
+  invested_ars: number;
+  current_value_ars: number;
+  pl_ars: number;
+  pl_pct: number;
+}
+
 export interface ChatResponse {
   conversation_id: string;
   reply: string;
@@ -31,6 +70,10 @@ export interface ChatResponse {
   investment?: InvestmentProjection | InvestmentProjection[];
   alternatives?: InvestmentProjection[];
   credit?: CreditProjection;
+  quote?: MarketQuote;
+  position?: PaperPosition;
+  positions?: PaperPosition[];
+  portfolio?: PortfolioSummary;
 }
 
 export interface ChatStoredMessage {

@@ -6,12 +6,105 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { chatApi } from "@/lib/api/chat";
-import { cn } from "@/lib/utils";
+import { cn, formatMoney } from "@/lib/utils";
 import { useAuthStore } from "@/store/use-auth-store";
+import type { MarketQuote, PaperPosition, PortfolioSummary } from "@/types/chat";
 
 interface Bubble {
   role: "user" | "assistant";
   content: string;
+  quote?: MarketQuote | null;
+  position?: PaperPosition | null;
+  positions?: PaperPosition[] | null;
+  portfolio?: PortfolioSummary | null;
+}
+
+function formatAssetPrice(price: number, currency: string) {
+  return currency === "ARS"
+    ? formatMoney(price)
+    : `US$ ${price.toLocaleString("es-AR", { maximumFractionDigits: 6, minimumFractionDigits: 2 })}`;
+}
+
+function PnLValue({ value }: { value: number }) {
+  const positive = value >= 0;
+  return (
+    <span className={cn("font-semibold", positive ? "text-emerald-400" : "text-pink-400")}>
+      {positive ? "+" : ""}
+      {formatMoney(value)}
+    </span>
+  );
+}
+
+function PositionCard({ position }: { position: PaperPosition }) {
+  return (
+    <div className="mt-2 rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-gray-300">
+      <div className="flex items-center justify-between">
+        <p className="font-semibold text-white">
+          {position.name} · {position.symbol}
+        </p>
+        <span className={cn("font-semibold", position.pl_pct >= 0 ? "text-emerald-400" : "text-pink-400")}>
+          {position.pl_pct >= 0 ? "+" : ""}
+          {position.pl_pct.toFixed(2)}%
+        </span>
+      </div>
+      <div className="mt-1 flex items-center justify-between">
+        <span>Cotiza {formatAssetPrice(position.current_price, position.currency)}</span>
+        <PnLValue value={position.pl_ars} />
+      </div>
+      <div className="mt-1 flex items-center justify-between text-gray-500">
+        <span>Invertiste {formatMoney(position.invested_ars)}</span>
+        <span>Vale {formatMoney(position.current_value_ars)}</span>
+      </div>
+      {position.change_24h_pct != null && (
+        <p className="mt-1 text-gray-500">Variación 24h: {position.change_24h_pct.toFixed(2)}%</p>
+      )}
+    </div>
+  );
+}
+
+function QuoteChip({ quote }: { quote: MarketQuote }) {
+  return (
+    <div className="mt-2 flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-gray-300">
+      <span className="font-semibold text-white">{quote.name} · {quote.symbol}</span>
+      <span>
+        {formatAssetPrice(quote.price, quote.currency)}
+        {quote.change_24h_pct != null && (
+          <span className={cn("ml-2", quote.change_24h_pct >= 0 ? "text-emerald-400" : "text-pink-400")}>
+            {quote.change_24h_pct >= 0 ? "+" : ""}
+            {quote.change_24h_pct.toFixed(2)}%
+          </span>
+        )}
+      </span>
+    </div>
+  );
+}
+
+function StructuredPayload({ bubble }: { bubble: Bubble }) {
+  if (bubble.position) return <PositionCard position={bubble.position} />;
+  if (bubble.positions && bubble.positions.length > 0) {
+    const portfolio = bubble.portfolio;
+    return (
+      <div>
+        <div className={cn("mt-2 rounded-xl border border-white/10 bg-white/5 p-2")}>
+          {bubble.positions.map((position) => (
+            <PositionCard key={position.id} position={position} />
+          ))}
+        </div>
+        {portfolio && (
+          <p className="mt-2 text-xs text-gray-400">
+            Total: {formatMoney(portfolio.invested_ars)} invertidos · valen{" "}
+            {formatMoney(portfolio.current_value_ars)} ·{" "}
+            <span className={cn("font-semibold", portfolio.pl_ars >= 0 ? "text-emerald-400" : "text-pink-400")}>
+              {portfolio.pl_ars >= 0 ? "ganancia" : "pérdida"} {portfolio.pl_ars >= 0 ? "+" : ""}
+              {formatMoney(portfolio.pl_ars)} ({portfolio.pl_pct.toFixed(2)}%)
+            </span>
+          </p>
+        )}
+      </div>
+    );
+  }
+  if (bubble.quote) return <QuoteChip quote={bubble.quote} />;
+  return null;
 }
 
 export function ChatWidget() {
@@ -45,7 +138,12 @@ export function ChatWidget() {
 
     try {
       const { data } = await chatApi.send(text, conversationId ?? undefined);
-      setBubbles((previous) => [...previous, { role: "assistant", content: data.reply }]);
+      const bubble: Bubble = { role: "assistant", content: data.reply };
+      if (data.quote) bubble.quote = data.quote;
+      if (data.position) bubble.position = data.position;
+      if (data.positions && data.positions.length > 0) bubble.positions = data.positions;
+      if (data.portfolio) bubble.portfolio = data.portfolio;
+      setBubbles((previous) => [...previous, bubble]);
       setQuickOptions(data.options ?? null);
       if (data.conversation_id) setConversationId(data.conversation_id);
     } catch {
@@ -95,8 +193,9 @@ export function ChatWidget() {
         {bubbles.length === 0 && (
           <div className="flex justify-start">
             <div className="max-w-[85%] whitespace-pre-line rounded-2xl rounded-tl-sm bg-white/10 px-3 py-2 text-sm text-gray-100">
-              Hola, soy tu asistente financiero. Puedo ayudarte a simular inversiones
-              y a revisar tu situación de créditos.
+              Hola, soy tu asistente financiero. Puedo ayudarte a simular
+              inversiones, operar en mercados (crypto, acciones o dólar) y
+              revisar tu situación de créditos.
             </div>
           </div>
         )}
@@ -115,6 +214,7 @@ export function ChatWidget() {
               )}
             >
               {bubble.content}
+              {bubble.role === "assistant" && <StructuredPayload bubble={bubble} />}
             </div>
           </div>
         ))}
