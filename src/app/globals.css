@@ -1,28 +1,77 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-background: #0f0728;
-  --color-foreground: #ffffff;
+  /* Semantic palette (resolved per theme via CSS variables) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-panel: var(--panel);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-soft: var(--muted-soft);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  /* Brand palette (identidad Presto) */
+  --color-brand-violet: #0b1f3a;
+  --color-brand-coral: #ff6f59;
+  --color-brand-sage: #6b8e23;
+  --color-brand-beige: #f5ebe0;
 }
 
-:root {
+/* Default (dark) palette */
+:root,
+.dark {
   color-scheme: dark;
+  --background: #0b1f3a;
+  --foreground: #f1f5f9;
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-strong: rgba(255, 255, 255, 0.14);
+  --panel: #102a4c;
+  --border: rgba(255, 255, 255, 0.14);
+  --muted: #cbd5f5;
+  --muted-soft: #94a3b8;
+  --accent: #ff6f59;
+  --accent-strong: #ff8a73;
+  --accent-soft: rgba(255, 111, 89, 0.18);
+  --success: #6b8e23;
+}
+
+/* Light palette */
+.light {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #0b1f3a;
+  --surface: rgba(11, 31, 58, 0.04);
+  --surface-strong: #ffffff;
+  --panel: #ffffff;
+  --border: rgba(11, 31, 58, 0.14);
+  --muted: #334155;
+  --muted-soft: #64748b;
+  --accent: #ff6f59;
+  --accent-strong: #e85d47;
+  --accent-soft: rgba(255, 111, 89, 0.12);
+  --success: #6b8e23;
 }
 
 html {
-  background-color: #0f0728;
+  background-color: var(--background);
 }
 
 body {
-  background-color: #0f0728;
-  color: #ffffff;
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
 ::selection {
-  background-color: #ec4899;
+  background-color: var(--accent-strong);
   color: #ffffff;
 }
 
@@ -35,6 +84,137 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Superficies que siempre son oscuras (hero de saldo, chat, banners):
+   redefinen los tokens para que las letras se mantengan claras en ambos temas. */
+.on-dark {
+  color-scheme: dark;
+  --foreground: #f1f5f9;
+  --surface: rgba(255, 255, 255, 0.1);
+  --surface-strong: rgba(255, 255, 255, 0.16);
+  --border: rgba(255, 255, 255, 0.16);
+  --muted: #cbd5e5;
+  --muted-soft: #94a3b8;
+}
+
+/* Legibilidad en tema claro para clases utilitarias heredadas */
+.light .text-white,
+.light .text-gray-100,
+.light .text-gray-200,
+.light .text-gray-300,
+.light .text-gray-400,
+.light .text-gray-500 {
+  color: var(--foreground);
+}
+
+.light .bg-white\/5,
+.light .bg-white\/10,
+.light .bg-white\/20 {
+  background-color: var(--surface);
+}
+
+.light .border-white\/10,
+.light .border-white\/15,
+.light .border-white\/20,
+.light .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border);
+}
+
+/* Colores de estado/acento: subir contraste sobre fondos claros */
+.light .text-green-200,
+.light .text-green-300,
+.light .text-green-400 {
+  color: #15803d;
+}
+
+.light .text-red-200,
+.light .text-red-300,
+.light .text-red-400 {
+  color: #b91c1c;
+}
+
+.light .text-amber-300,
+.light .text-amber-400 {
+  color: #b45309;
+}
+
+.light .text-blue-200,
+.light .text-blue-300,
+.light .text-blue-400 {
+  color: #1d4ed8;
+}
+
+.light .text-pink-100,
+.light .text-pink-300,
+.light .text-pink-400 {
+  color: #be185d;
+}
+
+.light .text-emerald-400 {
+  color: #047857;
+}
+
+.light .text-indigo-400 {
+  color: #4338ca;
+}
+
+.light .text-violet-400 {
+  color: #6d28d9;
+}
+
+/* Dentro de una superficie oscura, los acentos vuelven a ser claros */
+.light .on-dark .text-green-200,
+.light .on-dark .text-green-300,
+.light .on-dark .text-green-400 {
+  color: #86efac;
+}
+
+.light .on-dark .text-red-200,
+.light .on-dark .text-red-300,
+.light .on-dark .text-red-400 {
+  color: #fca5a5;
+}
+
+.light .on-dark .text-pink-100,
+.light .on-dark .text-pink-300,
+.light .on-dark .text-pink-400 {
+  color: #f9a8d4;
+}
+
+.light .on-dark .text-emerald-400 {
+  color: #34d399;
+}
+
+.light .on-dark .text-blue-200,
+.light .on-dark .text-blue-300 {
+  color: #bfdbfe;
+}
+
+/* Titulares con degradado: colores por tema para que siempre se lean */
+:root,
+.dark {
+  --heading-from: #ff6f59;
+  --heading-via: #cfe0ff;
+  --heading-to: #3b82f6;
+}
+
+.light {
+  --heading-from: #e85d47;
+  --heading-via: #1d4ed8;
+  --heading-to: #0b1f3a;
+}
+
+.heading-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--heading-from),
+    var(--heading-via),
+    var(--heading-to)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .deck-slide {

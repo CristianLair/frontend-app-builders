@@ -9,10 +9,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { cardsApi } from "@/lib/api/cards";
 import { isApiError } from "@/lib/api/error";
 import { demoUser } from "@/lib/demo/data";
-import { formatDate, formatMoney } from "@/lib/utils";
+import { cn, formatDate, formatMoney } from "@/lib/utils";
 import type { Card as CardType, CardPayload } from "@/types/card";
 import { useAuthStore } from "@/store/use-auth-store";
 import { useDemoStore } from "@/store/use-demo-store";
+import { useMobileMode } from "@/components/viewport/mobile-mode-provider";
 
 const DEMO_CARD: CardType = {
   id: "demo-card",
@@ -28,8 +29,9 @@ const DEMO_CARD: CardType = {
 };
 
 function CardSummary({ card }: { card: CardType }) {
+  const { mobileMode } = useMobileMode();
   return (
-    <dl className="grid gap-3 text-sm sm:grid-cols-2">
+    <dl className={cn("grid gap-3 text-sm", !mobileMode && "sm:grid-cols-2")}>
       <div>
         <dt className="text-gray-400">Titular</dt>
         <dd className="font-medium text-gray-100">
@@ -64,6 +66,7 @@ function CardSummary({ card }: { card: CardType }) {
 
 function RegisterCardForm({ onSuccess }: { onSuccess: (card: CardType) => void }) {
   const user = useAuthStore((store) => store.user);
+  const { mobileMode } = useMobileMode();
   const [form, setForm] = useState<CardPayload>({
     card_number: "",
     cvv: "",
@@ -117,7 +120,7 @@ function RegisterCardForm({ onSuccess }: { onSuccess: (card: CardType) => void }
         onChange={(event) => update("cvv", event.target.value.replace(/[^\d]/g, ""))}
         maxLength={4}
       />
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={cn("grid gap-4", !mobileMode && "sm:grid-cols-2")}>
         <Input
           label="Nombre"
           name="first_name"
@@ -141,7 +144,7 @@ function RegisterCardForm({ onSuccess }: { onSuccess: (card: CardType) => void }
         value={form.email}
         onChange={(event) => update("email", event.target.value)}
       />
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={cn("grid gap-4", !mobileMode && "sm:grid-cols-2")}>
         <Input
           label="Teléfono"
           name="phone"
@@ -169,6 +172,7 @@ function RegisterCardForm({ onSuccess }: { onSuccess: (card: CardType) => void }
 export default function PerfilPage() {
   const user = useAuthStore((store) => store.user);
   const demoMode = useDemoStore((store) => store.mode) === "demo";
+  const { mobileMode } = useMobileMode();
 
   const [card, setCard] = useState<CardType | null>(demoMode ? DEMO_CARD : null);
   const [cardLoading, setCardLoading] = useState(!demoMode);
@@ -205,7 +209,9 @@ export default function PerfilPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Mi perfil</h1>
+        <h1 className={cn("font-semibold text-white", mobileMode ? "text-xl" : "text-2xl")}>
+          Mi perfil
+        </h1>
         <p className="text-sm text-gray-400">Tus datos personales y tu tarjeta</p>
       </div>
 
@@ -213,7 +219,7 @@ export default function PerfilPage() {
         <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-200">
           Datos de la cuenta
         </h2>
-        <dl className="grid gap-3 text-sm sm:grid-cols-2">
+        <dl className={cn("grid gap-3 text-sm", !mobileMode && "sm:grid-cols-2")}>
           <div>
             <dt className="text-gray-400">Nombre</dt>
             <dd className="font-medium text-gray-100">{profile.name ?? "—"}</dd>
@@ -228,7 +234,7 @@ export default function PerfilPage() {
           </div>
           <div>
             <dt className="text-gray-400">Usuario ID</dt>
-            <dd className="font-mono text-gray-100">{profile.id}</dd>
+            <dd className="break-all font-mono text-gray-100">{profile.id}</dd>
           </div>
         </dl>
       </Card>

@@ -18,7 +18,19 @@ export function InstallPrompt() {
     if (typeof window === "undefined") return;
 
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
+      if (process.env.NODE_ENV === "production") {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      } else {
+        // En desarrollo no usamos Service Worker: cachea chunks de /_next/static
+        // con cache-first y puede servir versiones viejas que dejan la app
+        // "cargando". Desregistramos lo que haya quedado de visitas previas.
+        void navigator.serviceWorker
+          .getRegistrations()
+          .then((regs) => Promise.all(regs.map((reg) => reg.unregister())))
+          .then(() => ("caches" in window ? caches.keys() : Promise.resolve([])))
+          .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+          .catch(() => {});
+      }
     }
 
     const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
@@ -80,7 +92,7 @@ export function InstallPrompt() {
 
   return (
     <div className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-sm">
-      <div className="flex items-center gap-4 rounded-2xl border border-white/15 bg-[#1b0f3f]/95 p-4 shadow-2xl shadow-purple-950/50 backdrop-blur">
+      <div className="on-dark flex items-center gap-4 rounded-2xl border border-white/15 bg-[#0b1f33]/95 p-4 shadow-2xl shadow-blue-950/50 backdrop-blur">
         <Image
           src="/icons/icon-192.png"
           alt="Presto"
@@ -114,7 +126,7 @@ export function InstallPrompt() {
           type="button"
           aria-label="Cerrar"
           onClick={() => setDismissed(true)}
-          className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border border-white/15 bg-[#1b0f3f] text-gray-400 transition-colors hover:text-white"
+          className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border border-white/15 bg-[#0b1f33] text-gray-400 transition-colors hover:text-white"
         >
           ✕
         </button>

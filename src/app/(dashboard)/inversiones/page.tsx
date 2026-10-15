@@ -10,9 +10,10 @@ import { demoInvestments } from "@/lib/demo/data";
 import { investmentsApi } from "@/lib/api/investments";
 import { isApiError } from "@/lib/api/error";
 import { projectInvestment, ratePercent, ratePercentMonthly, TERM_OPTIONS } from "@/lib/finance";
-import { formatDate, formatMoney } from "@/lib/utils";
+import { cn, formatDate, formatMoney } from "@/lib/utils";
 import type { Investment } from "@/types/investment";
 import { useDemoStore } from "@/store/use-demo-store";
+import { useMobileMode } from "@/components/viewport/mobile-mode-provider";
 
 const DEMO_INVESTMENTS: Investment[] = demoInvestments.map((item) => ({
   id: item.id,
@@ -30,6 +31,7 @@ const DEMO_INVESTMENTS: Investment[] = demoInvestments.map((item) => ({
 
 export default function InversionesPage() {
   const demo = useDemoStore((store) => store.mode) === "demo";
+  const { mobileMode } = useMobileMode();
 
   const [investments, setInvestments] = useState<Investment[]>(
     demo ? DEMO_INVESTMENTS : [],
@@ -112,11 +114,13 @@ export default function InversionesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Inversiones</h1>
+        <h1 className={cn("font-semibold text-white", mobileMode ? "text-xl" : "text-2xl")}>
+          Inversiones
+        </h1>
         <p className="text-sm text-gray-400">Invertí tu dinero y hacelo crecer</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className={cn("grid gap-6", !mobileMode && "lg:grid-cols-2")}>
         <Card>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-200">
             Simular inversión

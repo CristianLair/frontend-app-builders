@@ -15,6 +15,7 @@ interface AuthState {
   login: (payload: LoginPayload) => Promise<void>;
   register: (payload: RegisterPayload) => Promise<void>;
   fetchMe: () => Promise<void>;
+  bootstrap: () => void;
   logout: () => void;
 }
 
@@ -52,12 +53,29 @@ export const useAuthStore = create<AuthState>()(
       },
       fetchMe: async () => {
         const { token } = get();
-        if (!token) return;
+        if (!token) {
+          set({ status: "unauthenticated" });
+          return;
+        }
         try {
           const { data } = await authApi.me(token);
-          set({ user: data, status: "authenticated" });
+          set({ user: data.user, status: "authenticated" });
         } catch {
           get().logout();
+        }
+      },
+      // Resuelve el estado inicial una vez montado en el cliente. Es
+      // idempotente: sólo actúa si todavía estamos en "idle". Se invoca desde
+      // <AuthBootstrap /> (en el layout raíz) y al terminar la hidratación.
+      bootstrap: () => {
+        const { status, token } = get();
+        if (status !== "idle") return;
+        setAuthToken(token);
+        if (token) {
+          set({ status: "loading" });
+          void get().fetchMe();
+        } else {
+          set({ status: "unauthenticated" });
         }
       },
       logout: () => {
@@ -68,11 +86,13 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "auth-storage",
       partialize: (state) => ({ token: state.token, user: state.user }),
+      // OJO: este callback se ejecuta de forma SÍNCRONA durante create(), antes
+      // de que exista la const `useAuthStore`. Referenciar el store acá lanza un
+      // ReferenceError (TDZ) que rompe la hidratación y deja `status` en "idle"
+      // (spinner infinito). Por eso sólo sincronizamos el token del cliente HTTP;
+      // el `status` se resuelve en bootstrap().
       onRehydrateStorage: () => (state) => {
         setAuthToken(state?.token ?? null);
-        if (!state?.token) {
-          useAuthStore.setState({ status: "unauthenticated" });
-        }
       },
     },
   ),

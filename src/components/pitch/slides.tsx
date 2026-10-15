@@ -65,16 +65,16 @@ export const SLIDES: Slide[] = [
     label: "Portada",
     render: ({ go }) => (
       <SlideShell className="flex min-h-[62vh] flex-col items-start justify-center py-16">
-        <p className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-lg font-bold tracking-tight text-transparent">
+        <p className="bg-gradient-to-r from-pink-400 via-blue-400 to-indigo-400 bg-clip-text text-lg font-bold tracking-tight text-transparent">
           Presto
         </p>
-        <span className="mt-8 inline-block rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-purple-200">
+        <span className="mt-8 inline-block rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-blue-200">
           Demo de producto · Préstamos y créditos con inteligencia
         </span>
         <h1 className="mt-6 text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-7xl">
           Tu dinero en
           <br />
-          <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-pink-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
             una sola app.
           </span>
         </h1>
@@ -344,7 +344,7 @@ export const SLIDES: Slide[] = [
         <Kicker>Diferenciador · Asistente con IA</Kicker>
         <Headline>
           La IA que acompaña cada
-          <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent"> decisión financiera.</span>
+          <span className="bg-gradient-to-r from-pink-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent"> decisión financiera.</span>
         </Headline>
         <Copy>
           Un asistente conversacional integrado que simula inversiones y revisa la situación de
@@ -482,7 +482,7 @@ export const SLIDES: Slide[] = [
         <Kicker>Hoja de ruta</Kicker>
         <Headline>
           Lo que ya está, y lo que
-          <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent"> destraba el capital.</span>
+          <span className="bg-gradient-to-r from-pink-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent"> destraba el capital.</span>
         </Headline>
         <div className="mt-9 space-y-4">
           <div className="rounded-2xl border border-green-500/30 bg-green-500/10 p-5">
@@ -524,7 +524,7 @@ export const SLIDES: Slide[] = [
         <Headline>
           No estamos pidiendo que nos escuches.
           <br />
-          <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-pink-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
             Estamos mostrando el producto.
           </span>
         </Headline>

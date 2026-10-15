@@ -178,11 +178,11 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="fixed inset-x-4 bottom-4 z-50 flex h-[min(560px,80vh)] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#1b0f3f] shadow-2xl shadow-purple-950/50 sm:inset-x-auto sm:bottom-5 sm:right-5 sm:w-[400px]">
-      <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-purple-900 to-indigo-900 px-4 py-3">
+    <div className="on-dark fixed inset-x-4 bottom-4 z-50 flex h-[min(560px,80vh)] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#0b1f33] shadow-2xl shadow-blue-950/50 sm:inset-x-auto sm:bottom-5 sm:right-5 sm:w-[400px]">
+      <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-blue-900 to-blue-900 px-4 py-3">
         <div>
           <p className="text-sm font-semibold text-white">Asistente financiero</p>
-          <p className="text-xs text-purple-200">Tu asistente financiero inteligente</p>
+          <p className="text-xs text-blue-200">Tu asistente financiero inteligente</p>
         </div>
         <Button variant="ghost" className="h-8 px-2 text-white hover:text-pink-400" onClick={() => setOpen(false)}>
           Cerrar

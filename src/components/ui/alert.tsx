@@ -8,7 +8,7 @@ type AlertProps = HTMLAttributes<HTMLDivElement> & {
 const variants = {
   error: "border-red-500/30 bg-red-500/10 text-red-200",
   success: "border-green-500/30 bg-green-500/10 text-green-200",
-  info: "border-white/10 bg-white/5 text-gray-300",
+  info: "border-border bg-surface text-muted",
 } as const;
 
 export function Alert({ variant = "info", className, ...props }: AlertProps) {

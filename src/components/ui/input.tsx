@@ -13,14 +13,14 @@ export function Input({ label, error, id: idProp, className, ...props }: InputPr
   return (
     <div className="space-y-1.5">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-gray-300">
+        <label htmlFor={id} className="text-sm font-medium text-muted">
           {label}
         </label>
       )}
       <input
         id={id}
         className={cn(
-          "h-10 w-full rounded-lg border border-white/15 bg-white/5 px-3 text-sm text-white caret-pink-400 placeholder:text-gray-500 focus:border-pink-500/40 focus:outline-2 focus:outline-pink-500/30",
+          "h-10 w-full rounded-lg border border-border bg-surface-strong px-3 text-sm text-foreground caret-accent placeholder:text-muted-soft focus:border-accent/40 focus:outline-2 focus:outline-accent/30",
           error && "border-red-500/50 focus:border-red-500 focus:outline-red-500/40",
           className,
         )}

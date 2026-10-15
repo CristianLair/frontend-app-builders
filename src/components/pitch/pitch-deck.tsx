@@ -55,9 +55,9 @@ export function PitchDeck() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0f0728]/80 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-background/80 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-3">
-          <p className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-base font-bold tracking-tight text-transparent">
+          <p className="bg-gradient-to-r from-pink-400 via-blue-400 to-indigo-400 bg-clip-text text-base font-bold tracking-tight text-transparent">
             Presto
           </p>
           <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export function PitchDeck() {
         </div>
       </main>
 
-      <footer className="sticky bottom-0 z-40 border-t border-white/10 bg-[#0f0728]/80 backdrop-blur">
+      <footer className="sticky bottom-0 z-40 border-t border-white/10 bg-background/80 backdrop-blur">
         <div className="mx-auto w-full max-w-6xl px-6 py-3">
           <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
             <div

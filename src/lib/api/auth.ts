@@ -25,6 +25,6 @@ export const authApi = {
     return http.post<ResetPasswordResponse>("/api/reset-password", payload);
   },
   me(token?: string) {
-    return http.get<User>("/api/me", token ? { token } : undefined);
+    return http.get<{ user: User }>("/api/me", token ? { token } : undefined);
   },
 };

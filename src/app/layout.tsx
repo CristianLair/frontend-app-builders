@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { AuthBootstrap } from "@/components/auth/auth-bootstrap";
+import { MobileModeProvider } from "@/components/viewport/mobile-mode-provider";
+import { MobileModeToggle } from "@/components/viewport/mobile-mode-toggle";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import "./globals.css";
 
@@ -34,25 +40,43 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f0728",
+  themeColor: "#0b1f3a",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-        >
-          <div className="absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-purple-600/20 blur-3xl" />
-          <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-pink-600/20 blur-3xl" />
-        </div>
-        {children}
-        <InstallPrompt />
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme'); if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}var r=document.documentElement;r.classList.remove('dark','light');r.classList.add(t);r.style.colorScheme=t;}catch(e){}})();",
+          }}
+        />
+        <ThemeProvider>
+          <MobileModeProvider>
+            <AuthBootstrap />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+            >
+              <div className="absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-accent/20 blur-3xl" />
+              <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-accent-strong/20 blur-3xl" />
+            </div>
+            <div className="fixed right-4 top-4 z-50 flex items-center gap-2">
+              <ThemeToggle />
+              <MobileModeToggle />
+            </div>
+            {children}
+            <InstallPrompt />
+          </MobileModeProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

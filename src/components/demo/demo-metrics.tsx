@@ -44,10 +44,10 @@ function Stat({ label, value, sub, tone = "neutral" }: { label: string; value: s
   const toneClass =
     tone === "positive" ? "text-green-400" : tone === "negative" ? "text-red-400" : "text-white";
   return (
-    <Card className="p-4">
+    <Card className="min-w-0 p-4">
       <p className="text-xs uppercase tracking-wide text-gray-400">{label}</p>
-      <p className={`mt-1 text-lg font-semibold ${toneClass}`}>{value}</p>
-      <p className="text-xs text-gray-500">{sub}</p>
+      <p className={`mt-1 break-words text-base font-semibold leading-tight ${toneClass}`}>{value}</p>
+      <p className="mt-0.5 text-xs leading-tight text-gray-500">{sub}</p>
     </Card>
   );
 }
@@ -65,8 +65,6 @@ function Delta({ children, tone = "positive" }: { children: React.ReactNode; ton
 }
 
 export function DemoMetrics() {
-  const patrimony = (ASSETS / 1000000).toFixed(1).replace(".", ",");
-  const monthlyDelta = ((2.7 - 2.45) / 2.45) * 100;
   const periodDelta = ((2.7 - 1.4) / 1.4) * 100;
 
   const availablePct = Math.round((AVAILABLE / ASSETS) * 100);
@@ -88,14 +86,7 @@ export function DemoMetrics() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Stat
-          label="Patrimonio total"
-          value={`$ ${patrimony}M`}
-          sub={`+${monthlyDelta.toFixed(1).replace(".", ",")}% este mes`}
-          tone="positive"
-        />
-        <Stat label="Saldo disponible" value={formatMoney(AVAILABLE)} sub="Líquido para operar" />
+      <div className="grid gap-4 sm:grid-cols-2">
         <Stat
           label="Invertido"
           value={formatMoney(INVESTED)}
@@ -105,7 +96,7 @@ export function DemoMetrics() {
         <Stat label="Deuda activa" value={formatMoney(OWED)} sub="Créditos en curso" tone="negative" />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="space-y-4">
         <Card>
           <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-200">
             Distribución de tu dinero
@@ -167,12 +158,12 @@ export function DemoMetrics() {
           <svg viewBox={`0 0 ${W} ${H}`} className="mt-4 w-full" role="img" aria-label="Gráfico de crecimiento del patrimonio">
             <defs>
               <linearGradient id="growth-area" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#ec4899" stopOpacity="0.35" />
-                <stop offset="100%" stopColor="#ec4899" stopOpacity="0.02" />
+                <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0.02" />
               </linearGradient>
               <linearGradient id="growth-line" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#a855f7" />
-                <stop offset="100%" stopColor="#ec4899" />
+                <stop offset="100%" stopColor="#2dd4bf" />
               </linearGradient>
             </defs>
             <path d={areaPath} fill="url(#growth-area)" />
@@ -185,7 +176,7 @@ export function DemoMetrics() {
               strokeLinejoin="round"
             />
             {SERIES.map((point, i) => (
-              <circle key={point.month} cx={xAt(i)} cy={yAt(point.value)} r="3" fill="#0f0728" stroke="#ec4899" strokeWidth="1.5" />
+              <circle key={point.month} cx={xAt(i)} cy={yAt(point.value)} r="3" fill="#0b1f3a" stroke="#2dd4bf" strokeWidth="1.5" />
             ))}
             {SERIES.map((point, i) => (
               <text

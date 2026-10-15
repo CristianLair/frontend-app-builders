@@ -1,42 +1,67 @@
-import { type ButtonHTMLAttributes, type PropsWithChildren } from "react";
+import {
+  type ButtonHTMLAttributes,
+  cloneElement,
+  isValidElement,
+  type PropsWithChildren,
+  type ReactElement,
+} from "react";
 import { cn } from "@/lib/utils";
 import { Spinner } from "@/components/ui/spinner";
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: "primary" | "secondary" | "ghost" | "danger";
+    size?: "sm" | "md" | "lg";
     isLoading?: boolean;
+    asChild?: boolean;
   }
 >;
 
 const variants = {
   primary:
-    "bg-gradient-to-r from-pink-500 to-violet-600 text-white shadow-lg shadow-pink-500/20 hover:from-pink-400 hover:to-violet-500 focus-visible:outline-pink-400 disabled:bg-gradient-to-r disabled:from-pink-500/60 disabled:to-violet-600/60 disabled:shadow-none",
+    "bg-brand-coral text-white shadow-lg shadow-brand-coral/20 hover:bg-brand-coral/90 focus-visible:outline-brand-coral disabled:bg-brand-coral/50 disabled:shadow-none",
   secondary:
-    "bg-white/10 text-white ring-1 ring-inset ring-white/15 hover:bg-white/20 focus-visible:outline-white/60",
-  ghost: "text-gray-300 hover:bg-white/10 hover:text-white",
+    "bg-surface text-foreground ring-1 ring-inset ring-border hover:bg-surface-strong focus-visible:outline-foreground/60",
+  ghost: "text-muted hover:bg-surface hover:text-foreground",
   danger:
     "bg-red-500/15 text-red-300 ring-1 ring-inset ring-red-500/30 hover:bg-red-500/25 hover:text-red-200 focus-visible:outline-red-500/60 disabled:bg-red-500/10",
 } as const;
 
+const sizes = {
+  sm: "h-8 px-3 text-xs",
+  md: "h-10 px-4 text-sm",
+  lg: "h-12 px-6 text-base",
+} as const;
+
 export function Button({
   variant = "primary",
+  size = "md",
   isLoading = false,
+  asChild = false,
   className,
   children,
   disabled,
   type = "button",
   ...props
 }: ButtonProps) {
+  const classes = cn(
+    "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed",
+    sizes[size],
+    variants[variant],
+    className,
+  );
+
+  if (asChild && isValidElement(children)) {
+    return cloneElement(children as ReactElement<{ className?: string }>, {
+      className: cn(classes, (children as ReactElement<{ className?: string }>).props.className),
+    });
+  }
+
   return (
     <button
       type={type}
       disabled={disabled || isLoading}
-      className={cn(
-        "inline-flex h-10 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed",
-        variants[variant],
-        className,
-      )}
+      className={classes}
       {...props}
     >
       {isLoading && <Spinner size="sm" />}
